@@ -12,7 +12,6 @@ class Edge<
     T extends Comparable<T>,
     N extends Comparable<N>
 > {
-    // kenapa connect macam ni?
     Vertex<T, N> toVertex;
     N weight;
     Edge<T, N> nextEdge;
