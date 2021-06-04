@@ -8,23 +8,19 @@ package com.example;
  * T - type of data contained inside the vertex
  * N - type of data for the weight (float, integer, double, etc)
  */
-class Edge<
-    T extends Comparable<T>,
-    N extends Comparable<N>
-> {
-    Vertex<T, N> toVertex;
-    N weight;
-    Edge<T, N> nextEdge;
+public class Edge implements Comparable<Edge>{
+    public Vertex toVertex;
+    public double distance;
 
-    public Edge() {
-        this.toVertex = null;
-        this.weight = null;
-        this.nextEdge = null;
+    public Edge() {}
+
+    public Edge(Vertex toVertex, double distance) {
+        this.toVertex = toVertex;
+        this.distance = distance;
     }
 
-    public Edge(Vertex<T, N> destination, N weight, Edge<T, N> nextEdge) {
-        this.toVertex = destination;
-        this.weight = weight;
-        this.nextEdge = nextEdge;
+    @Override
+    public int compareTo(Edge e) {
+        return Double.compare(this.distance, e.distance);
     }
 }

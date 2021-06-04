@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.ArrayList;
+
 /**
  * WIA/WIB1002 Data Structures
  * part of Graphs implementation using List
@@ -10,30 +12,35 @@ package com.example;
  * T - type of data contained inside the vertex
  * N - type of data for the weight (float, integer, double, etc)
  */
-class Vertex<
-    T extends Comparable<T>,
-    N extends Comparable<N>
-> {
-    T vertexInfo;
-    int indeg;
-    int outdeg;
-    Vertex<T, N> nextVertex;
-    Edge<T, N> firstEdge;
+class Vertex extends Location {
+    public int ID;
+    public boolean visited = false;
+    public ArrayList<Edge> EdgeList;
 
-    public Vertex() {
-        this.vertexInfo = null;
-        this.indeg = 0;
-        this.outdeg = 0;
-        this.nextVertex = null;
-        this.firstEdge = null;
+    public Vertex() {}
+
+    public Vertex(Double x, Double y, int demandSize, int ID) {
+        super(x, y, demandSize);
+        this.ID = ID;
+        EdgeList = new ArrayList<>();
     }
 
-    public Vertex(T vertexInfo, Vertex<T, N> next) {
-        this.vertexInfo = vertexInfo;
-        this.indeg = 0;
-        this.outdeg = 0;
-        this.nextVertex = next;
-        this.firstEdge = null;
+    public Vertex visit() {
+        visited = true;
+        return this;
+    }
+
+    public Vertex unvisit() {
+        visited = false;
+        return this;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public boolean isVisited() {
+        return visited;
     }
 }
 
