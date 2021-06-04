@@ -1,19 +1,23 @@
 package com.example;
 
-public class Location implements Comparable<Location> {
-    protected String name;
+public class Location {
     protected Coordinate<Double> coordinate;
-    protected int demandSize;
+    protected int demandSize = 0;
 
-    public Location(String name, Double x, Double y, int demandSize) {
-        this.name = name;
-        this.coordinate = new Coordinate<>(x, y);
+    public Location(){}
+
+    public Location(Double x, Double y, int demandSize) {
+        this.coordinate = new Coordinate<Double>(x, y);
         this.demandSize = demandSize;
     }
 
-//    public Location(int x, int y, int demandSize) {
-//        this(Double.valueOf(x), Double.valueOf(y), demandSize);
-//    }
+    public Location(Double x, Double y) { //constructor for depot
+        this.coordinate = new Coordinate<Double>(x, y);
+    }
+
+    public Location(int x, int y, int demandSize) {
+        this(Double.valueOf(x), Double.valueOf(y), demandSize);
+    }
 
     public Coordinate<Double> getCoordinate() {
         return coordinate;
@@ -21,15 +25,5 @@ public class Location implements Comparable<Location> {
 
     public int getDemandSize() {
         return demandSize;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int compareTo(Location loc) {
-        // TODO define
-        return 0;
     }
 }

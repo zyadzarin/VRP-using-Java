@@ -13,9 +13,7 @@ public class Coordinate<T extends Number> {
         this.x = x;
     }
 
-    public T getX() {
-        return x;
-    }
+    public T getX() { return x; }
 
     public void setY(T y) {
         this.y = y;
