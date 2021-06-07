@@ -11,6 +11,7 @@ public class Main {
         int C = sc.nextInt(); //C: vehicle capacity
         WeightedGraph VRP = new WeightedGraph();
         GreedySearch search = new GreedySearch();
+	BreadthSearch searchBFS = new BreadthSearch();
 
 	    for(int i=0; i < N; i++) {
             VRP.addVertex(new Vertex(sc.nextDouble(), sc.nextDouble(), sc.nextInt(), i));
@@ -18,6 +19,7 @@ public class Main {
 
 	    VRP.completeGraph();
 	    search.run(VRP, C);
+	    BreadthSearch.work(VRP, C);
 
         }
 
