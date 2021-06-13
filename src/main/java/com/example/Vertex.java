@@ -42,5 +42,14 @@ class Vertex extends Location {
     public boolean isVisited() {
         return visited;
     }
+
+    @Override
+    public String toString() {
+        return "Vertex{" +
+                "ID=" + ID +
+                ", visited=" + visited +
+                ", EdgeList=" + EdgeList +
+                '}';
+    }
 }
 
