@@ -13,10 +13,10 @@ import java.util.ArrayList;
  * N - type of data for the weight (float, integer, double, etc)
  */
 class Vertex extends Location {
+    boolean checked;
     public int ID;
     public boolean visited = false;
     public ArrayList<Edge> EdgeList;
-    public boolean checked;
 
     public Vertex() {}
 
@@ -31,18 +31,23 @@ class Vertex extends Location {
         return this;
     }
 
+    public Vertex unvisit() {
+        visited = false;
+        return this;
+    }
+
     public Vertex check() {
         checked = true;
         return this;
     }
 
-    public Vertex unvisit() {
-        visited = false;
-        return this;
-    }
     public Vertex uncheck() {
         checked = false;
         return this;
+    }
+
+    public boolean isChecked() {
+        return checked;
     }
 
     public int getID() {
@@ -53,7 +58,13 @@ class Vertex extends Location {
         return visited;
     }
 
-    public boolean isChecked() {return checked;}
+    @Override
+    public String toString() {
+        return "Vertex{" +
+                "ID=" + ID +
+                ", visited=" + visited +
+                ", EdgeList=" + EdgeList +
+                '}';
+    }
 }
-
 
