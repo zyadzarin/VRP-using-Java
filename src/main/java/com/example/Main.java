@@ -3,7 +3,6 @@ package com.example;
 import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -13,8 +12,8 @@ public class Main {
 
     public static void readFromFile() {
         WeightedGraph VRP = new WeightedGraph();
-        GreedySearch search = new GreedySearch();
-        BreadthSearch searchBFS = new BreadthSearch();
+//        GreedySearch search = new GreedySearch();
+//        BreadthSearch searchBFS = new BreadthSearch();
 
         Scanner scanner = new Scanner(System.in);
 
@@ -29,15 +28,15 @@ public class Main {
             String NC_line = fileReader.nextLine();
             String[] NC_parts = NC_line.split(" ");
 
-            int N = Integer.valueOf(NC_parts[0]);
-            int C = Integer.valueOf(NC_parts[1]);
+            int N = Integer.parseInt(NC_parts[0]);
+            int C = Integer.parseInt(NC_parts[1]);
 
             String depot_line = fileReader.nextLine();
             String[] depot_parts = depot_line.split(" ");
 
             // only take the x and y values
-            double depot_x = Double.valueOf(depot_parts[0]);
-            double depot_y = Double.valueOf(depot_parts[1]);
+            double depot_x = Double.parseDouble(depot_parts[0]);
+            double depot_y = Double.parseDouble(depot_parts[1]);
 
             VRP.addVertex(new Vertex(depot_x, depot_y, 0, i++));
 
@@ -49,15 +48,15 @@ public class Main {
                 String customer_line = fileReader.nextLine();
                 String[] customer_info = customer_line.split(" ");
 
-                double cust_x = Double.valueOf(customer_info[0]);
-                double cust_y = Double.valueOf(customer_info[1]);
-                double cust_demand = Double.valueOf(customer_info[2]);
+                double cust_x = Double.parseDouble(customer_info[0]);
+                double cust_y = Double.parseDouble(customer_info[1]);
+                int cust_demand = Integer.parseInt(customer_info[2]);
 
 //				System.out.printf("Customer at (%d, %d) with demand (%d)\n",
 //						cust_x, cust_y, cust_demand
 //				);
 
-                VRP.addVertex(new Vertex(cust_x, depot_y, 0, i++));
+                VRP.addVertex(new Vertex(cust_x, cust_y, cust_demand, i++));
             }
 
             System.out.println("Constructing complete graph...");
@@ -87,8 +86,8 @@ public class Main {
         int C = sc.nextInt();
 
         WeightedGraph VRP = new WeightedGraph();
-        GreedySearch search = new GreedySearch();
-        BreadthSearch searchBFS = new BreadthSearch();
+//        GreedySearch search = new GreedySearch();
+//        BreadthSearch searchBFS = new BreadthSearch();
 
         for (int i = 0; i < N; i++) {
             System.out.println("Supplying info for node " + i);
