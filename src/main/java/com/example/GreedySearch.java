@@ -19,7 +19,7 @@ public class GreedySearch {
         String result = search();
         long end = System.nanoTime();
 
-        System.out.println("Tour Cost: " + tourCost);
+        System.out.println("Total tour cost: " + tourCost);
         System.out.println(result);
         System.out.println("Execution time: " + (double) (end - start) * Math.pow(10, -6) + "ms\n");
     }
