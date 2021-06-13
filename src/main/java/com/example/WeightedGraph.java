@@ -38,11 +38,28 @@ class WeightedGraph {
         }
     }
 
+    public void uncheckAll() {
+        for(Vertex V: vertexArrayList) {
+            V.uncheck();
+        }
+    }
+
     public boolean isAllVisited() {
         boolean out = true;
         for(Vertex V: vertexArrayList) {
             out = V.isVisited();
             if (!out)
+                return false;
+        }
+        return out;
+    }
+
+    public boolean isAllVisitedExceptDepot() {
+        boolean out = true;
+
+        for(int i=1; i < vertexArrayList.size(); i++) {
+            out = vertexArrayList.get(i).isVisited();
+            if(!out)
                 return false;
         }
         return out;

@@ -16,6 +16,7 @@ class Vertex extends Location {
     public int ID;
     public boolean visited = false;
     public ArrayList<Edge> EdgeList;
+    public boolean checked;
 
     public Vertex() {}
 
@@ -30,8 +31,17 @@ class Vertex extends Location {
         return this;
     }
 
+    public Vertex check() {
+        checked = true;
+        return this;
+    }
+
     public Vertex unvisit() {
         visited = false;
+        return this;
+    }
+    public Vertex uncheck() {
+        checked = false;
         return this;
     }
 
@@ -42,5 +52,8 @@ class Vertex extends Location {
     public boolean isVisited() {
         return visited;
     }
+
+    public boolean isChecked() {return checked;}
 }
+
 
