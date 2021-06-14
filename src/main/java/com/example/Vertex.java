@@ -64,6 +64,7 @@ class Vertex extends Location {
                 "ID=" + ID +
                 ", visited=" + visited +
                 ", EdgeList=" + EdgeList +
+                ", demand=" + demandSize +
                 '}';
     }
 }
