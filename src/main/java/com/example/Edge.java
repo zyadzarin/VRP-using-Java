@@ -12,8 +12,6 @@ public class Edge implements Comparable<Edge>{
     public Vertex toVertex;
     public double distance;
 
-    public Edge() {}
-
     public Edge(Vertex toVertex, double distance) {
         this.toVertex = toVertex;
         this.distance = distance;

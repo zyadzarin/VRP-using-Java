@@ -1,10 +1,9 @@
 package com.example;
 
-import java.util.Arrays;
-
 public class BreadthSearch {
 
-    /**Breadth First Seach
+    /**
+     * Breadth First Search
      * finding the simplest route to reach all placess in unweighted graph
      */
 
