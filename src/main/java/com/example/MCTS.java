@@ -1,5 +1,6 @@
 package com.example;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,8 +11,7 @@ public class MCTS {
     private static int C,N;
     private static double tourCost = 0;
 
-    private static int level;
-    private static int iterations;
+
     private static double alpha;
 
     private static double[][] globalPolicy;
@@ -31,11 +31,12 @@ public class MCTS {
         MCTS.alpha = alpha;
 
         int routeCapacity;
+        double totalCost = 0;
         bestTour = new Tour();
-        bestTour.setCost(Double.POSITIVE_INFINITY);
 
-        MCTS.policy = new double[level][N][N];
-        MCTS.globalPolicy = new double[N][N];
+
+        policy = new double[level][N][N];
+        globalPolicy = new double[N][N];
 
         for(double[] row : globalPolicy) {
             Arrays.fill(row, 0);
@@ -61,21 +62,23 @@ public class MCTS {
             int indexStr = outString.lastIndexOf("-->");
             outString.delete(indexStr, outString.length()-1);
 
+            totalCost += tour.distanceOfRoute(route);
             outString.append("\n" +routeCapacity);
-            outString.append("\nCost: " + tour.distanceOfRoute(route));
+            outString.append("\nCost: " + tour.distanceOfRoute(route) + "\n");
 
         }
 
         long end = System.nanoTime();
-        outString.append("Tour Cost: " + tour.getCost());
+        outString.append("Tour Cost: " + totalCost);
+        outString.append("\nExecution time: " + (double) (end - start)  + "s\n");
         System.out.println(outString);
-        outString.append("Execution time: " + (double) (end - start) * Math.pow(10, -6) + "ms\n");
+
 
     }
 
 
     public static Tour search(int level, int iterations) {
-
+        bestTour.setCost(Double.POSITIVE_INFINITY);
 
         long start = System.nanoTime();
 
@@ -84,7 +87,7 @@ public class MCTS {
         else {
             policy[level-1] = globalPolicy;
 
-            for(int i=0; i <= iterations; i++) {
+            for(int i=0; i < iterations; i++) {
                 Tour newTour = search(level-1, i);
                 if(newTour.getCost() < bestTour.getCost()); {
                     bestTour = newTour;
@@ -102,29 +105,31 @@ public class MCTS {
     }
 
     private static void adapt(Tour a_tour, int level) {
+        ArrayList<Vertex> visitedVertexList = new ArrayList<>();
 
         for(int i=0; i < a_tour.getListOfRoutes().size(); i++) {
             ArrayList<Vertex> routes = a_tour.getListOfRoutes().get(i);
 
-            for(int j =0; j < routes.size() -2 ; j++) {
+            for(int j =0; j < routes.size() -1 ; j++) {
                 Vertex stops = routes.get(j);
                 Vertex nextStop = routes.get(j+1);
-                policy[level][stops.getID()][nextStop.getID()] += alpha;
-                double z = 0;
+                policy[level-1][stops.getID()][nextStop.getID()] += alpha;
+                double z = 0.0;
 
                 for(Edge possibleMove: stops.EdgeList) {
                     if(!possibleMove.toVertex.isVisited())
                         z += Math.exp(globalPolicy[stops.getID()][possibleMove.toVertex.getID()]);
                 }
                 for(Edge possibleMove: stops.EdgeList) {
-                    if(!possibleMove.toVertex.isVisited())
-                        policy[level][stops.getID()][possibleMove.toVertex.getID()] -=
-                                alpha * (Math.exp(globalPolicy[stops.getID()][possibleMove.toVertex.getID()])/z);
+                    if(!possibleMove.toVertex.isVisited()) {
+                        policy[level-1][stops.getID()][possibleMove.toVertex.getID()] -=
+                                alpha * (Math.exp(globalPolicy[stops.getID()][possibleMove.toVertex.getID()])/z); }
                 }
-                stops.visit();
+//                stops.visit();
+                visitedVertexList.add(stops);
             }
         }
-        G.unvisitAll();
+//        G.unvisitAll();
     }
 
     private static Tour rollout() {
@@ -136,12 +141,12 @@ public class MCTS {
         newTour.getListOfRoutes().add(newRoute);
 
         ArrayList<Vertex> possibleSuccessors = new ArrayList<>();
+        ArrayList<Integer> visitedVertexList = new ArrayList<>();
+        ArrayList<Integer> checkedVertexList = new ArrayList<>();
 
 
-
-        newTour.getListOfRoutes().add(newRoute);
         int tempC = C;
-        double tempCost = 0;
+        double totalCost = 0;
 
 
         while(true) {
@@ -151,7 +156,7 @@ public class MCTS {
 
             for(Edge edge: currentStop.EdgeList) {  //find possible successors
                 Vertex uncheckedSuccessor = edge.toVertex;
-                if(uncheckedSuccessor.getID() != 0 && !uncheckedSuccessor.isVisited() && !uncheckedSuccessor.isChecked())
+                if(uncheckedSuccessor.getID()!= 0 && !uncheckedSuccessor.isVisited() && !uncheckedSuccessor.isChecked())
                     possibleSuccessors.add(uncheckedSuccessor);
             }
             if(possibleSuccessors.isEmpty()) {
@@ -161,27 +166,49 @@ public class MCTS {
                 newRoute = new ArrayList<>();
                 newRoute.add(G.getHead());
                 newTour.getListOfRoutes().add(newRoute); //add new route
+//                G.getHead().unvisit();
+                G.uncheckAll();
                 tempC = C;
                 continue;
             }
 
             Vertex nextStop = selectNextMove(currentStop, possibleSuccessors);
-            for(Edge currentEdge: currentStop.EdgeList) {
-                if(currentEdge.toVertex.getID() == nextStop.getID())
-                    tempCost = currentEdge.distance;
-            }
+//            if(nextStop.getID() == 0) {
+//                G.getHead().visit();
+//                newRoute.add(nextStop);
+//                if(G.isAllVisited()) {
+//                    break; }
+//
+//                newRoute = new ArrayList<>();
+//                newRoute.add(G.getHead());
+//                newTour.getListOfRoutes().add(newRoute); //add new route
+//                G.getHead().unvisit();
+//                possibleSuccessors.clear();
+//                G.uncheckAll();
+//                tempC = C;
+//                continue;
+//            }
+
             if(tempC >= nextStop.demandSize){
                 newRoute.add(nextStop);
                 nextStop.visit();
-                newTour.setCost(newTour.getCost() + tempCost);
                 tempC -=nextStop.demandSize;
+
             }
             else{
                 nextStop.check(); }
+
             possibleSuccessors.clear();
+
+
         }
         G.unvisitAll();
         G.uncheckAll();
+
+        for(ArrayList<Vertex> routes : newTour.getListOfRoutes()) {
+            totalCost += newTour.distanceOfRoute(routes);
+        }
+        newTour.setCost(totalCost);
         return newTour;
     }
 
@@ -194,6 +221,7 @@ public class MCTS {
             probability[i] = Math.exp(globalPolicy[currentStop.getID()][possibleSuccessors.get(i).getID()]);
             sum += probability[i];
         }
+
         double mrand = new Random().nextDouble()*sum;
         int i=0;
         sum = probability[0];
@@ -202,6 +230,7 @@ public class MCTS {
         }
         return possibleSuccessors.get(i);
     }
+
 }
 
 class Tour {

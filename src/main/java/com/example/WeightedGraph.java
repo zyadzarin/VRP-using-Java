@@ -57,9 +57,9 @@ class WeightedGraph {
     public boolean isAllVisitedExceptDepot() {
         boolean out = true;
 
-        for(int i=1; i < vertexArrayList.size(); i++) {
+        for(int i=0; i < vertexArrayList.size(); i++) {
             out = vertexArrayList.get(i).isVisited();
-            if(!out)
+            if( vertexArrayList.get(i).getID() != 0 && !out)
                 return false;
         }
         return out;

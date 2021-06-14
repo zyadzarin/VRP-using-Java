@@ -10,7 +10,8 @@ public class Main {
     public static double alpha = 1;
 
     public static void main(String[] args) {
-        readFromFile();
+//        readFromFile();
+        manualInput();
     }
 
     public static void readFromFile() {
@@ -69,7 +70,11 @@ public class Main {
             GreedySearch.run(VRP, C);
 
             System.out.println("Running breadth first search...");
-            BreadthSearch.work(VRP, C);
+            BreadthSearch.run(VRP, C);
+
+            MCTS.run(VRP, N, C, level, iterations, alpha);
+
+
 
             System.out.println("Complete");
         } catch (IOException e) {
@@ -93,17 +98,18 @@ public class Main {
 //        BreadthSearch searchBFS = new BreadthSearch();
 
         for (int i = 0; i < N; i++) {
-            System.out.println("Supplying info for node " + i);
-            System.out.print("Enter x=");
-            double x = sc.nextDouble();
-
-            System.out.print("Enter y=");
-            double y = sc.nextDouble();
-
-            System.out.print("Enter demand=");
-            int demand = sc.nextInt();
-
-            VRP.addVertex(new Vertex(x, y, demand, i));
+//            System.out.println("Supplying info for node " + i);
+//            System.out.print("Enter x=");
+//            double x = sc.nextDouble();
+//
+//            System.out.print("Enter y=");
+//            double y = sc.nextDouble();
+//
+//            System.out.print("Enter demand=");
+//            int demand = sc.nextInt();
+//
+//            VRP.addVertex(new Vertex(x, y, demand, i));
+                VRP.addVertex(new Vertex(sc.nextDouble(), sc.nextDouble(), sc.nextInt(), i));
 
             System.out.println();
         }
@@ -115,8 +121,9 @@ public class Main {
         GreedySearch.run(VRP, C);
 
         System.out.println("Running breadth first search...");
-        BreadthSearch.work(VRP, C);
+        BreadthSearch.run(VRP, C);
 
+        System.out.println("Running MCTS...");
         MCTS.run(VRP, N, C, level, iterations, alpha);
 
 
