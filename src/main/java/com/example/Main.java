@@ -12,8 +12,8 @@ public class Main {
     public static double alpha = 1;
 
     public static void main(String[] args) {
-//        readFromFile();
-        manualInput();
+        readFromFile();
+//        manualInput();
     }
 
     public static void readFromFile() {
@@ -24,6 +24,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Sample input is provided in the sample_data folder");
         System.out.print("Enter file path=");
 
         String filePath = scanner.nextLine();
