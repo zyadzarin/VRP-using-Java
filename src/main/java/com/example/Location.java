@@ -7,7 +7,7 @@ public class Location {
     public Location(){}
 
     public Location(Double x, Double y, int demandSize) {
-        this.coordinate = new Coordinate<Double>(x, y);
+        this.coordinate = new Coordinate<>(x, y);
         this.demandSize = demandSize;
     }
 
