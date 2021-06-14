@@ -57,14 +57,13 @@ public class DepthFirstSearchTest {
 
             Vertex depot = vertexIterator.next();
 
-            run(graph, depot);
+            run(graph, depot, C);
 
         }
     }
 
-    private static void run(Graph<Vertex, DefaultWeightedEdge> graph, Vertex v) {
-        final int default_capacity = 27;
-        int vehicle_cap = default_capacity;
+    private static void run(Graph<Vertex, DefaultWeightedEdge> graph, Vertex v, int defaultCapacity) {
+        int vehicle_cap = defaultCapacity;
         int vehicle_count = 0;
         double total_tour_cost = 0.0f;
         double curr_tour_cost = 0.0f;
@@ -111,6 +110,8 @@ public class DepthFirstSearchTest {
                         }
                     }
                 } else {
+                    // mcm betul lol
+//                    stack.push(curr);
 
 //                    System.out.println("Adding total tour cost: " + curr_tour_cost);
 //                    total_tour_cost += curr_tour_cost;
@@ -136,10 +137,10 @@ public class DepthFirstSearchTest {
                     solution.add(v);
 //                    solution.add(curr);
 
-                    stack.clear();
-                    stack.add(curr);
+//                    stack.clear();
+//                    stack.add(curr);
 
-                    vehicle_cap = default_capacity;
+                    vehicle_cap = defaultCapacity;
 
 //                    System.out.println("curr demand size: " + curr.getDemandSize());
 //                    System.out.println("vehicle cap: " + vehicle_cap);
@@ -152,8 +153,9 @@ public class DepthFirstSearchTest {
         }
 
         System.out.println();
-        System.out.println(total_tour_cost);
+        System.out.println("Total tour cost: " + total_tour_cost);
 
+        System.out.println("Solutions: ");
         for(List<Vertex> sol: solutions) {
             System.out.println(sol);
         }
