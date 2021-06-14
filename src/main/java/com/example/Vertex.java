@@ -12,16 +12,26 @@ import java.util.ArrayList;
  * T - type of data contained inside the vertex
  * N - type of data for the weight (float, integer, double, etc)
  */
-class Vertex extends Location {
+class Vertex {
     boolean checked;
     public int ID;
     public boolean visited = false;
     public ArrayList<Edge> EdgeList;
 
-    public Vertex() {}
+    protected Coordinate<Double> coordinate;
+    protected int demandSize;
+
+    public Coordinate<Double> getCoordinate() {
+        return coordinate;
+    }
+
+    public int getDemandSize() {
+        return demandSize;
+    }
 
     public Vertex(Double x, Double y, int demandSize, int ID) {
-        super(x, y, demandSize);
+        this.coordinate = new Coordinate<>(x, y);
+        this.demandSize = demandSize;
         this.ID = ID;
         EdgeList = new ArrayList<>();
     }
