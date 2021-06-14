@@ -122,10 +122,20 @@ public class DepthFirstSearch {
         System.out.println("Vehicle count: " + this.vehicle_count);
         System.out.println("Solutions: ");
 
-        for(List<Vertex> sol: solutions) {
-            for (Vertex v: sol) {
-                System.out.print(v.getID() + " ---> ");
+        Iterator<List<Vertex>> iter = this.solutions.iterator();
+
+        while (iter.hasNext()) {
+            List<Vertex> sol = iter.next();
+
+            Iterator<Vertex> vertexIterator = sol.iterator();
+
+            while (vertexIterator.hasNext()) {
+                Vertex v = vertexIterator.next();
+                String arrow = vertexIterator.hasNext() ? " ---> " : "";
+
+                System.out.print(v.getID() + arrow);
             }
+
             System.out.println();
         }
     }
