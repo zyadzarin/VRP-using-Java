@@ -13,14 +13,13 @@ public class Main {
 
     public static void main(String[] args) {
         readFromFile();
-//        manualInput();
+
     }
 
     public static void readFromFile() {
         WeightedGraph VRP = new WeightedGraph();
         List<Vertex> vertexList = new ArrayList<>();
-//        GreedySearch search = new GreedySearch();
-//        BreadthSearch searchBFS = new BreadthSearch();
+
 
         Scanner scanner = new Scanner(System.in);
 
@@ -54,7 +53,7 @@ public class Main {
             System.out.println("Vehicle capacity=" + C);
             System.out.println();
 
-//			System.out.printf("Depot at (%d, %d)\n", depot_x, depot_y);
+
 
             while (fileReader.hasNext()) {
                 String customer_line = fileReader.nextLine();
@@ -64,8 +63,7 @@ public class Main {
                 double cust_y = Double.parseDouble(customer_info[1]);
                 int cust_demand = Integer.parseInt(customer_info[2]);
 
-//				System.out.printf("Customer at (%d, %d) with demand (%d)\n",
-//						cust_x, cust_y, cust_demand
+
 //				);
 
                 Vertex customerVertex = new Vertex(cust_x, cust_y, cust_demand, i++);
